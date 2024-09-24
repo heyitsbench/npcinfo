@@ -1,0 +1,8 @@
+## Interface: 30300
+## Title: |cffEEE4AENPC Info|r
+## Notes: Based entirely off NPCTime, |cffFFC700slash command: /npcinfo|r
+## Author: Heyitsbench and Yuyuli
+## Version: 1.0.0
+## SavedVariables: NPCInfoDB
+
+NPCInfo.lua
