@@ -35,6 +35,21 @@ function NPCInfo:ShowInfo(self)
     if Settings.ShowPlayerGUID and UnitIsPlayer(unit) then
       AddColoredDoubleLine(self, "GUID", playerGUID)
     end
+
+    if Settings.ShowPlayerTarget and UnitIsPlayer(unit) then
+      local unitTarget = unit .. "target"
+      local targetName = UnitName(unitTarget)
+
+      if UnitIsUnit(unitTarget, unit) then
+        targetName = "Self"
+      elseif UnitIsUnit(unitTarget, "player") then
+        targetName = "You"
+      end
+
+      if targetName then
+        AddColoredDoubleLine(self, "Target", targetName)
+      end
+    end
 end
 
 function NPCInfo:OnLoad()
@@ -58,8 +73,9 @@ function NPCInfo:Help(msg)
   if not cmd or cmd == "" or cmd == "help" then
     AddMessage(fName.." |cff58C6FA/npcinfo|r")
     AddMessage("  |cff58C6FA/npcinfo id -|r  |cffEEE4AEToggles NPC ID|r")
-    AddMessage("  |cff58C6FA/npcinfo playerguid -|r  |cffEEE4AEToggles Player GUID|r")
+    AddMessage("  |cff58C6FA/npcinfo playerguid -|r  |cffEEE4AEToggles player GUID|r")
     AddMessage("  |cff58C6FA/npcinfo rawguid -|r  |cffEEE4AEToggles raw GUID|r")
+    AddMessage("  |cff58C6FA/npcinfo playertarget -|r  |cffEEE4AEToggles target of player|r")
     AddMessage("  |cff58C6FA/npcinfo mod  -|r  |cffEEE4AEToggle only show with CTRL/ALT/SHIFT|r")
 
   elseif cmd == "mod" then
@@ -90,5 +106,12 @@ function NPCInfo:Help(msg)
       AddMessage(fName, "Show raw GUID")
     end
     Settings.ShowRawGUID = not Settings.ShowRawGUID
+  elseif cmd == "playertarget" then
+    if Settings.ShowPlayerTarget then
+      AddMessage(fName, "Hide target of player")
+    else
+      AddMessage(fName, "Show target of player")
+    end
+    Settings.ShowPlayerTarget = not Settings.ShowPlayerTarget
   end
 end
